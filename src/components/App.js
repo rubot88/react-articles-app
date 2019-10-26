@@ -1,10 +1,9 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import ArticleList from './ArticleList';
 import articles from '../fixtures';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default class App extends PureComponent {
-
     state = {
         reverted: false
     }
@@ -20,7 +19,6 @@ export default class App extends PureComponent {
         alignItems: 'center'
     }
     render() {
-        console.log(`---> 1`);
         return (
             <div className="container">
                 <div className="jumbotron p-4" style={this.styleTitle}>
