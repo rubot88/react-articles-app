@@ -1,11 +1,15 @@
 import React, { PureComponent } from 'react';
 import ArticleList from './ArticleList';
-import articles from '../fixtures';
+import LoadArticles from '../services/LoadArticles';
 import 'bootstrap/dist/css/bootstrap.css';
 
+
 export default class App extends PureComponent {
+    LoadArticles = new LoadArticles();
     state = {
-        reverted: false
+        reverted: false,
+        articles:[],
+        error:false
     }
     revert = () => {
         this.setState(state => ({
@@ -13,12 +17,37 @@ export default class App extends PureComponent {
         }))
     }
 
+    updateArticles=()=>{
+        this.LoadArticles.getAllArticles()
+        .then(this.onArticlesLoaded)
+        .catch(this.onError);
+    }
+
+    onArticlesLoaded=articles=>{
+        this.setState({
+            articles,
+            error:false
+        })
+        
+    }
+
+    onError=()=>{
+        this.setState({
+            error:true
+        })
+    }
+
     styleTitle = {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
     }
+    componentDidMount=()=>{
+        this.updateArticles();
+        
+    }
     render() {
+        const {articles} = this.state;
         return (
             <div className="container">
                 <div className="jumbotron p-4" style={this.styleTitle}>
