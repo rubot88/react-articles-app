@@ -8,8 +8,8 @@ export default class App extends PureComponent {
     LoadArticles = new LoadArticles();
     state = {
         reverted: false,
-        articles:[],
-        error:false
+        articles: [],
+        error: false
     }
     revert = () => {
         this.setState(state => ({
@@ -17,23 +17,23 @@ export default class App extends PureComponent {
         }))
     }
 
-    updateArticles=()=>{
+    updateArticles = () => {
         this.LoadArticles.getAllArticles()
-        .then(this.onArticlesLoaded)
-        .catch(this.onError);
+            .then(this.onArticlesLoaded)
+            .catch(this.onError);
     }
 
-    onArticlesLoaded=articles=>{
+    onArticlesLoaded = articles => {
         this.setState({
             articles,
-            error:false
+            error: false
         })
-        
+
     }
 
-    onError=()=>{
+    onError = () => {
         this.setState({
-            error:true
+            error: true
         })
     }
 
@@ -42,12 +42,12 @@ export default class App extends PureComponent {
         justifyContent: 'space-between',
         alignItems: 'center'
     }
-    componentDidMount=()=>{
+    componentDidMount = () => {
         this.updateArticles();
-        
+
     }
     render() {
-        const {articles} = this.state;
+        const { articles, error } = this.state;
         return (
             <div className="container">
                 <div className="jumbotron p-4" style={this.styleTitle}>
@@ -56,7 +56,7 @@ export default class App extends PureComponent {
                     </h1>
                     <button className="btn btn-lg btn-dark float-right" onClick={this.revert}>Revert</button>
                 </div>
-                <ArticleList articles={this.state.reverted ? articles.slice().reverse() : articles} />
+                <ArticleList articles={this.state.reverted ? articles.slice().reverse() : articles} error={error} />
             </div>
         )
     }

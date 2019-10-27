@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import Article from '../Article';
+import ErrorMessage from '../Error';
 import './style.css';
 
 export default class ArticleList extends PureComponent {
@@ -12,7 +13,11 @@ export default class ArticleList extends PureComponent {
         })
     }
     render() {
-        const articleElements = this.props.articles.map((article) =>
+        const {articles, error} = this.props;
+        if (error){
+            return <ErrorMessage/>
+        }
+        const articleElements = articles.map((article) =>
             <li className="article_list_li"
                 key={article.id}>
                 <Article article={article}
